@@ -30,10 +30,16 @@ def getsizeofnp(*arrays: np.ndarray) -> int:
 
 file_counter = 0
 
+def preprocess(arr) -> np.ndarray:
+    arr = arr.numpy()
+    arr = np.clip(arr, a_min=0., a_max=1023.0)
+    return arr
+
 for batch_coordinates, batch_features, batch_targets in ch_dataloader:
-    batch_coordinates = batch_coordinates.numpy()
-    batch_features = batch_features.numpy()
-    batch_targets = batch_targets.numpy()
+    batch_coordinates = preprocess(batch_coordinates)
+    batch_features = preprocess(batch_features)
+    batch_targets = preprocess(batch_targets)
+
     if not initialised:
         batch_coords_buffer = batch_coordinates
         batch_features_buffer = batch_features

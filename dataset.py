@@ -4,6 +4,7 @@ from random import randrange
 from typing import Iterator, T_co
 from torch.utils.data import DataLoader
 import atexit
+import pvlib
 
 import numpy as np
 import xarray as xr
@@ -46,6 +47,13 @@ class ClimateHackDataset(IterableDataset):
         date = self.min_date
         while date <= self.max_date:
             current_time = datetime.combine(date, start_time)
+            #solar_pos_df = pvlib.solarposition.get_solarposition(current_time, 55.3781, 3.4360)
+            #solar_pos = solar_pos_df['elevation'].at[current_time]
+            
+            #if solar_pos < 10.0:
+            #    current_time += timedelta(minutes=20)
+            #    continue
+
             while current_time.time() <= end_time:
                 yield current_time
                 current_time += timedelta(minutes=20)
