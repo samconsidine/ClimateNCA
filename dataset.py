@@ -11,21 +11,6 @@ from numpy import float32
 from torch.utils.data import IterableDataset
 import os
 
-import shelve
-
-class Cache:
-    def __init__(self, path):
-        self.d = shelve.open(path, writeback=True)
-        atexit.register(self.d.close)
-        if 'items' not in self.d.keys():
-            self.d['items'] = []
-
-    def append(self, item):
-        self.d['items'].append(item)
-
-    def __iter__(self):
-        return self.d['items'].__iter__()
-
 
 class ClimateHackDataset(IterableDataset):
     def __init__(
