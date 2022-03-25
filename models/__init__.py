@@ -1,3 +1,3 @@
-from models.climate_nca import CAModel
+from models.climate_nca import ClimateNCA
 
-__all__ = [CAModel]
+__all__ = [ClimateNCA]
