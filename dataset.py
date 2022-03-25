@@ -13,6 +13,8 @@ class PreloadedDataset(IterableDataset):
     def __init__(self, fp, batch_size=2):
         self.data = np.load(fp)
         self.batch_size = batch_size
+
+        # First load the data to cpu memory as memory is short and this isn't a bottleneck
         self.batch_coordinates = torch.from_numpy(self.data['batch_coordinates']).to('cpu')
         self.batch_features = torch.from_numpy(self.data['batch_features']).to('cpu')
         self.batch_targets = torch.from_numpy(self.data['batch_targets']).to('cpu')

@@ -1,3 +1,11 @@
+"""
+This script exsists because the indexing on the original dataset makes accessing it extremely slow.
+This program downloads the dataset and saves it as numpy chunks to be loaded by the model when needed.
+
+Usage: python3 dataprocessing.py
+"""
+
+
 import numpy as np
 import os
 from glob import glob
@@ -17,7 +25,7 @@ dataset = xr.open_dataset(
     chunks="auto",  # Load the data as a Dask array
 )
 
-ch_dataset = ClimateHackDataset(dataset, crops_per_slice=1, day_limit=7)
+ch_dataset = ClimateHackDataset(dataset, crops_per_slice=1, day_limit=365)
 ch_dataloader = DataLoader(ch_dataset, batch_size=64)
 
 initialised = False
